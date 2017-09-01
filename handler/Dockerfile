@@ -1,12 +1,14 @@
 FROM tensorflow/tensorflow
 
-ADD https://github.com/alexellis/faas/releases/download/0.5.5-alpha/fwatchdog /usr/bin
-ADD http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz /tmp/
-
-RUN mkdir /tmp/imagenet
-RUN tar -xvf /tmp/inception-2015-12-05.tgz -C /tmp/imagenet/
-RUN mv /tmp/inception-2015-12-05.tgz /tmp/imagenet/inception-2015-12-05.tgz
+ADD https://github.com/alexellis/faas/releases/download/0.6.2/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
+
+RUN mkdir -p /tmp/imagenet
+ADD ./inception-2015-12-05.tgz /tmp/imagenet
+
+#RUN mkdir /tmp/imagenet
+#RUN tar -xvf /tmp/inception-2015-12-05.tgz -C /tmp/imagenet/
+#RUN mv /tmp/inception-2015-12-05.tgz /tmp/imagenet/inception-2015-12-05.tgz
 
 WORKDIR /root/
 COPY images images
@@ -26,6 +28,7 @@ RUN pip install -r requirements.txt
 WORKDIR /root/
 
 ENV fprocess="python index.py"
+ENV TF_CPP_MIN_LOG_LEVEL=3
 
 HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
 

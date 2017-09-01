@@ -1,0 +1,6 @@
+*.tgz
+*.zip
+build
+template
+*.jpg
+*.png

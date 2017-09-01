@@ -9,4 +9,5 @@ def get_stdin():
 
 if(__name__ == "__main__"):
     st = get_stdin()
-    handler.handle(st)
+    res = handler.handle(st)
+    print(res)

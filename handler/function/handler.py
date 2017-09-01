@@ -207,10 +207,10 @@ def maybe_download_url(url, dest_directory):
 
   return filepath
 
-def main(_):
+def main2(_):
   maybe_download_and_extract()
   image = FLAGS.image_file
-  run_inference_on_image(image)
+  return run_inference_on_image(image)
 
 def handle(req):
   #print("Handle this -> " + req)
@@ -221,7 +221,7 @@ def handle(req):
   #print("Downloading ", req)
   FLAGS.image_url = req
   FLAGS.image_file = maybe_download_url(req, '/root/images')
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+  return tf.app.run(main=main2, argv=[sys.argv[0]] + unparsed)
 
 parser = argparse.ArgumentParser()
 # classify_image_graph_def.pb:
